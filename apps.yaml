@@ -4,7 +4,7 @@ metadata:
   annotations:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
   labels:
-    argocd.argoproj.io/instance: apps
+    xargocd.argoproj.io/instance: apps
     umbrella: "true"
   name: apps
   namespace: argocd
@@ -17,9 +17,12 @@ spec:
     automated: {}
     syncOptions:
     - Validate=true
-  source:
-    path: apps
-    repoURL: git@github.com:adonaicosta/argo-apps.git
-    targetRevision: HEAD
+  sources:
+    - path: apps
+      repoURL: https://github.com/adonaicosta/argo-apps.git
+      targetRevision: HEAD
+    - path: apps/apps-infra
+      repoURL: https://github.com/adonaicosta/argo-apps.git
+      targetRevision: HEAD
 #    directory:
 #      recurse: true
