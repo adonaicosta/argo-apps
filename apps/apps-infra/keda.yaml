@@ -38,7 +38,8 @@ spec:
     automated:
       prune: false
       selfHeal: false
-    syncOptions: []
+    syncOptions: 
+      - ServerSideApply=true
     retry:
       limit: 2
       backoff:
