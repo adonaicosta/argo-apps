@@ -1,0 +1,726 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  labels:
+    cluster: xixi-dev-us-east5-001
+    umbrella: "false"
+    wave: "3"
+  name: default-rabbitmq
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: rabbitmq
+    server: https://kubernetes.default.svc
+  source:
+    path: ''
+    repoURL: https://charts.helm.sh/incubator
+    targetRevision: 0.2.5
+    chart: raw
+    helm:
+      values: |-
+        resources:
+        - apiVersion: v1
+          kind: Secret
+          metadata:
+            annotations:
+              reloader.stakater.com/match: "true"
+            name: default-rabbitmq-load-definitions
+          stringData:
+            load_definitions.json: |
+              {
+                "users": [
+                  {
+                    "name": "admin",
+                    "password": "EF2FCBD4746A2FD4BC8FDA843DF71C2761D93FF892D590E97C04160F90396D1F",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "ai",
+                    "password": "fLfnOEts8v4zgn4YB1FFWCzWbuWYGLtt3XAiNA7EOSiqSubj7xXAQNevquHGsF1",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "chat",
+                    "password": "KWGFSJFXN6PZW6DBVXWZNVUUXAMM5ZVXVJD6LYFSKMT57WPHWJ24MJCUF2LE5LUE",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "integrator_hook",
+                    "password": "GD875T8HK8ZXBBRSCXYZBXPJPFT8LGSHX9NMF8KLVF6P6WY5GNRBZ76T2HXUJ6XV",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "integrator",
+                    "password": "ERCZRXBFDJ679DUDZSENNLTTBSNN4F3DQTAF3Y8FQY54FXV5R49XGXQU39F9LE5Z",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "knowledge_base",
+                    "password": "ygB2utRLUoeebPfx0ks9AHujyNo5GjbnonoiQnsTHRLc8a0JRztODTec3zqD7z2",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "whatsapp",
+                    "password": "Z5EL9F93UQXGX94R5VXF45YQF8Y3FATQD3F4NNSBTTLNNESZDUD976JDFBXRZCRE",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "facebook",
+                    "password": "DZ8GFF93UQXGX94R5VXF45YQF8Y3FATQD3FL8TFPJPXBZYXCSRBBXZ8KH8T578DG",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "persons",
+                    "password": "B9YH2ZWVF5F7CFX2BRWVKKL625VWRMARQMSRYTBJR4M33V67TPX72WE34XTS64H8",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "email",
+                    "password": "GPBSKPDFHSTXSLHKIGYFNMAUFACRVNADCBVORZVYTPYLAFXILVNAHNUMPYFNLGQP",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "widget",
+                    "password": "EF2FCBD4746A2FD4BC8FDA843DF71C2761D93FF892D590E97C04160F90396D1F",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "data-import",
+                    "password": "BE5A6C4DEF0BDD07D0D77DC764611EAD834B228A26D0820C5FB5F3E3656FCD29",
+                    "tags": "administrator"
+                  },
+                  {
+                    "name": "documents_processor",
+                    "password": "HqtaCaQJI8Ot8sOjQtJ7hIFPfMnFqNG1PcDlmxJaFtuUTh2a52Ijb17eonzqyFd",
+                    "tags": "administrator"
+                  }
+                  ,{
+                    "name": "nucleus",
+                    "password": "22F2EC3A951A04DA2CC3E64C4D4788C3AA972E0B9B6BCDD99F80209C269A1863",
+                    "tags": "administrator"
+                  }
+                  ,{
+                    "name": "ticket",
+                    "password": "C729623251C06D27144833FF26B994110D842985D14ABC0E572E97DD565ADC43",
+                    "tags": "administrator"
+                  }
+                ],
+                "vhosts": [
+                  {
+                    "name": "/"
+                  },
+                  {
+                    "name": "integrator_hook"
+                  },
+                  {
+                    "name": "facebook"
+                  },
+                  {
+                    "name": "persons"
+                  },
+                  {
+                    "name": "chat"
+                  },
+                  {
+                    "name": "whatsapp"
+                  },
+                  {
+                    "name": "email"
+                  },
+                  {
+                    "name": "widget"
+                  },
+                  {
+                    "name": "data-import"
+                  }
+                  ,{
+                    "name": "nucleus"
+                  }
+                  ,{
+                    "name": "ticket"
+                  }
+                  ,{
+                    "name": "ai"
+                  },
+                  {
+                    "name": "knowledge_base"
+                  },
+                  {
+                    "name": "documents_processor"
+                  }
+                ],
+                "permissions": [
+                  {
+                    "user": "admin",
+                    "vhost": "/",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "facebook",
+                    "vhost": "facebook",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "chat",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "chat",
+                    "vhost": "chat",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "integrator_hook",
+                    "vhost": "integrator_hook",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "facebook",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "integrator_hook",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "persons",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "persons",
+                    "vhost": "persons",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "whatsapp",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "whatsapp",
+                    "vhost": "whatsapp",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "email",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "email",
+                    "vhost": "email",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "widget",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "widget",
+                    "vhost": "widget",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "data-import",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "data-import",
+                    "vhost": "data-import",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  }
+                  ,{
+                    "user": "admin",
+                    "vhost": "nucleus",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "nucleus",
+                    "vhost": "nucleus",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  }
+                  ,{
+                    "user": "admin",
+                    "vhost": "ticket",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "ticket",
+                    "vhost": "ticket",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  }
+                  ,{
+                    "user": "admin",
+                    "vhost": "ai",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "ai",
+                    "vhost": "ai",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "knowledge_base",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "knowledge_base",
+                    "vhost": "knowledge_base",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "admin",
+                    "vhost": "documents_processor",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  },
+                  {
+                    "user": "documents_processor",
+                    "vhost": "documents_processor",
+                    "configure": ".*",
+                    "write": ".*",
+                    "read": ".*"
+                  }
+                ],
+                "policies": [
+                  {
+                    "vhost": "/",
+                    "name": "delete-amq.gen",
+                    "pattern": "^amq\\.gen.*",
+                    "apply-to": "all",
+                    "definition": {
+                      "expires": 1
+                    },
+                    "priority": 0
+                  },
+                  {
+                    "vhost": "/",
+                    "name": "ha-all",
+                    "pattern": ".*",
+                    "apply-to": "all",
+                    "definition": {
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic"
+                    },
+                    "priority": 0
+                  },
+                  {
+                    "vhost": "/",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "chat",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "integrator_hook",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "whatsapp",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "email",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "facebook",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "data-import",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "nucleus",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "ticket",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "chat",
+                    "name": "RECEIVE_MESSAGE",
+                    "pattern": "(.*)RECEIVE_MESSAGE$",
+                    "apply-to": "queues",
+                    "definition": {
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "integrator_hook",
+                    "name": "RECEIVE_MESSAGE",
+                    "pattern": "(.*)RECEIVE_MESSAGE$",
+                    "apply-to": "queues",
+                    "definition": {
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "widget",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "ai",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "knowledge_base",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  },
+                  {
+                    "vhost": "documents_processor",
+                    "name": "LAZY_PURGABLE_QUEUES",
+                    "pattern": "(_ERROR$|[_]\\d{6,16}$)",
+                    "apply-to": "queues",
+                    "definition": {
+                      "expires": 259200000,
+                      "ha-mode": "all",
+                      "ha-sync-batch-size": 1,
+                      "ha-sync-mode": "automatic",
+                      "queue-mode": "lazy"
+                    },
+                    "priority": 1
+                  }
+                ],
+                "exchanges": [
+
+                ],
+                "bindings": [
+
+                ]
+              }
+          type: Opaque
+        - apiVersion: rabbitmq.com/v1beta1
+          kind: RabbitmqCluster
+          metadata:
+            annotations:
+              reloader.stakater.com/search: "true"
+            name: default-rabbitmq
+          spec:
+            image: rabbitmq:3.9.9-management
+            override:
+              service:
+                spec:
+                  ports:
+                  - name: metrics
+                    port: 15692
+                    protocol: TCP
+                    targetPort: 15692
+              statefulSet:
+                spec:
+                  template:
+                    spec:
+                      containers:
+                      - name: rabbitmq
+                        ports:
+                        - containerPort: 15692
+                          name: metrics
+                          protocol: TCP
+                        volumeMounts:
+                        - mountPath: /app/
+                          name: definitions
+                          readOnly: true
+                        - mountPath: /opt/rabbitmq/community-plugins
+                          name: community-plugins
+                      initContainers:
+                      - command:
+                        - sh
+                        - -c
+                        - |
+                          curl -L -v \
+                            https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/3.10.0/rabbitmq_delayed_message_exchange-3.10.0.ez \
+                            --output /community-plugins/rabbitmq_delayed_message_exchange-3.10.0.ez
+                        image: curlimages/curl
+                        imagePullPolicy: IfNotPresent
+                        name: copy-community-plugins
+                        terminationMessagePolicy: FallbackToLogsOnError
+                        volumeMounts:
+                        - mountPath: /community-plugins/
+                          name: community-plugins
+                      topologySpreadConstraints:
+                      - maxSkew: 1
+                        topologyKey: topology.kubernetes.io/zone
+                        whenUnsatisfiable: ScheduleAnyway
+                      volumes:
+                      - name: definitions
+                        secret:
+                          items:
+                          - key: load_definitions.json
+                            path: load_definitions.json
+                          secretName: default-rabbitmq-load-definitions
+                      - emptyDir: {}
+                        name: community-plugins
+            persistence:
+              storage: 10Gi
+              storageClassName: premium-rwo
+            rabbitmq:
+              additionalConfig: |
+                cluster_partition_handling = ignore
+                disk_free_limit.relative = 1.0
+                load_definitions = /app/load_definitions.json
+                vm_memory_high_watermark_paging_ratio = 0.5
+                vm_memory_high_watermark.relative = 0.7
+                prometheus.return_per_object_metrics = true
+                management.path_prefix = /infra/rabbitmq
+              additionalPlugins:
+              - rabbitmq_shovel
+              - rabbitmq_shovel_management
+              - rabbitmq_federation
+              - rabbitmq_federation_management
+              - rabbitmq_delayed_message_exchange
+              envConfig: |
+                PLUGINS_DIR=/opt/rabbitmq/plugins:/opt/rabbitmq/community-plugins
+            replicas: 3
+            tolerations:
+            - effect: NoSchedule
+              key: dedicated
+              operator: Equal
+              value: default-rabbitmq
+        - apiVersion: networking.k8s.io/v1
+          kind: Ingress
+          metadata:
+            annotations:
+              kubernetes.io/tls-acme: "true"
+              nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$escaped_request_uri
+              nginx.ingress.kubernetes.io/auth-url: https://$host/oauth2/auth
+              nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+            name: default-rabbitmq
+          spec:
+            ingressClassName: nginx-external
+            rules:
+            - host: rabbitmq.pombo.azul.meuovo
+              http:
+                paths:
+                - backend:
+                    service:
+                      name: default-rabbitmq
+                      port:
+                        name: management
+                  path: /infra/rabbitmq
+                  pathType: Prefix
+        - apiVersion: monitoring.coreos.com/v1
+          kind: ServiceMonitor
+          metadata:
+            name: default-rabbitmq-service-monitor
+            labels:
+              release: kubeprometheus-operator
+          spec:
+            endpoints:
+            - port: metrics
+              scheme: http
+              interval: ""
+              scrapeTimeout: ""
+            selector:
+              matchLabels:
+                app.kubernetes.io/component: rabbitmq
+                app.kubernetes.io/name: default-rabbitmq
+            namespaceSelector:
+              matchNames: 
+              - rabbitmq
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true
+    retry:
+      limit: 2
+      backoff:
+        duration: 5s
+        maxDuration: 3m0s
+        factor: 2

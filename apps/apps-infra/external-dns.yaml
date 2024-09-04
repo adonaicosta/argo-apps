@@ -1,0 +1,71 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  labels:
+    cluster: xix-dev-us-east5-001
+    umbrella: "false"
+    external-dns: "true"
+    wave: "3"
+  name: external-dns
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: sre
+    server: https://kubernetes.default.svc
+  source:
+    path: ''
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 6.13.3
+    chart: external-dns
+    helm:
+      values: |
+        domainFilters:
+        - meuovo.com
+        google:
+          project: xixi-infrastructure
+        metrics:
+          enabled: false
+          podAnnotations:
+            prometheus.io/path: /metrics
+            prometheus.io/port: "7979"
+            prometheus.io/scrape: "true"
+          serviceMonitor:
+            enabled: true
+            interval: ""
+            namespace: sre
+            scrapeTimeout: ""
+        policy: upsert-only
+        provider: google
+        publishHostIP: true
+        publishInternalServices: true
+        replicas: 1
+        serviceAccount:
+          annotations:
+            iam.gke.io/gcp-service-account: bola@quadrada
+        sources:
+        - service
+        - ingress
+        tolerations:
+        - effect: NoSchedule
+          key: dedicated
+          operator: Equal
+          value: generic
+        zoneIdFilters:
+        - devxixidesk-com
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions: 
+      - Replace=true
+    retry:
+      limit: 2
+      backoff:
+        duration: 5s
+        maxDuration: 3m0s
+        factor: 2
+

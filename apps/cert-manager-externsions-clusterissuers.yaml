@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  labels:
+    cluster: xixi-dev-us-east5-001
+    umbrella: "false"
+    wave: "3"
+  name: cert-manager-externsions-clusterissuers
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: cert-manager
+    server: https://kubernetes.default.svc
+  source:
+    path: ''
+    repoURL: https://charts.helm.sh/incubator
+    targetRevision: 0.2.5
+    chart: raw
+    helm:
+      values: |-
+        resources:
+        - apiVersion: cert-manager.io/v1
+          kind: ClusterIssuer
+          metadata:
+            name: letsencrypt-production
+          spec:
+            acme:
+              email: pombo@azul.meuovo.com
+              privateKeySecretRef:
+                name: letsencrypt-production
+              server: https://acme-v02.api.letsencrypt.org/directory
+              solvers:
+              - dns01:
+                  cloudDNS:
+                    project: xixi-infrastructure
+        - apiVersion: cert-manager.io/v1
+          kind: ClusterIssuer
+          metadata:
+            name: internal
+          spec:
+            selfSigned: {}
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions: []
+

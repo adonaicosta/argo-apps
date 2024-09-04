@@ -1,0 +1,70 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  labels:
+    umbrella: "false"
+    wave: "2"
+  name: standalone-redis-1
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: redis
+    server: https://kubernetes.default.svc
+  source:
+    path: ''
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 16.12.0
+    chart: redis
+    helm:
+      values: |-
+        architecture: replication
+        auth:
+          password: SCX5Ugr3R6
+        configmap: |-
+          # Enable AOF https://redis.io/topics/persistence#append-only-file
+          appendonly yes
+
+          # Disable RDB persistence, AOF persistence already enabled.
+          save ""
+
+          # Enable AOF https://redis.io/topics/persistence#append-only-file
+          maxmemory 200000000
+
+          # User-supplied configuration:
+          maxmemory-policy allkeys-lru
+        master:
+          persistence:
+            size: 10G
+          tolerations:
+          - effect: NoSchedule
+            key: dedicated
+            operator: Equal
+            value: redis-standalone
+        metrics:
+          enabled: false
+          serviceMonitor:
+            additionalLabels:
+              release: kubeprometheus-operator
+            enabled: true
+            namespace: redis
+        replica:
+          replicaCount: 1
+        slave:
+          persistence:
+            size: 10G
+          tolerations:
+          - effect: NoSchedule
+            key: dedicated
+            operator: Equal
+            value: redis-standalone
+        usePassword: true
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

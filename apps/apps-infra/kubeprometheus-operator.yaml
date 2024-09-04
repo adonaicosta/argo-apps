@@ -1,0 +1,92 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  labels:
+    cluster: xixi-dev-us-east5-001
+    umbrella: "false"
+    wave: "2"
+  name: kubeprometheus-operator
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: sre
+    server: https://kubernetes.default.svc
+  source:
+    path: ''
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 58.2.2
+    chart: kube-prometheus-stack
+    helm:
+      values: |-
+        alertmanager:
+          enabled: false
+        coreDns:
+          enabled: false
+        fullnameOverride: prometheus-stack
+        grafana:
+          enabled: false
+        kube-state-metrics:
+          tolerations:
+          - effect: NoSchedule
+            key: dedicated
+            operator: Equal
+            value: generic
+        kubeDns:
+          enabled: true
+        kubeEtcd:
+          enabled: false
+        kubeScheduler:
+          enabled: false
+        nodeExporter:
+          enabled: true
+        prometheus:
+          enable: true
+          prometheusSpec:
+            disableCompaction: true
+            externalLabels:
+              cluster: xixi
+            replicas: 1
+            retention: 2h
+            scrapeInterval: 30s
+            scrapeTimeout: 10s
+            tolerations:
+            - effect: NoSchedule
+              key: dedicated
+              operator: Equal
+              value: prometheus
+          service:
+            type: ClusterIP
+          serviceAccount:
+            create: false
+            name: thanos
+          thanosService:
+            enabled: false
+        prometheus-node-exporter:
+        prometheusOperator:
+          certManager:
+            enabled: false
+          enabled: true
+          service:
+            type: ClusterIP
+          tolerations:
+          - effect: NoSchedule
+            key: dedicated
+            operator: Equal
+            value: prometheus
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - ServerSideApply=true
+      - Replace=true
+    retry:
+      limit: 2
+      backoff:
+        duration: 5s
+        maxDuration: 3m0s
+        factor: 2
