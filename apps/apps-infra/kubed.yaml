@@ -15,6 +15,16 @@ spec:
     name: ''
     namespace: sre
     server: https://kubernetes.default.svc
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+        - /spec/template/metadata/annotations
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+      jsonPointers:
+        - /spec/metrics
   source:
     path: ''
     repoURL: https://charts.getup.io/getupcloud
