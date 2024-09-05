@@ -23,8 +23,8 @@ spec:
       values: |-
         config:
           annotations: {}
-          clientID: 34550581416
-          clientSecret: GOCSPX
+          clientID: "34550581416"
+          clientSecret: "GOCSPX"
           cookieSecret: "cm9zY2E="
         configFile: |-
           email_domains = [ "arromaba.com" ]
