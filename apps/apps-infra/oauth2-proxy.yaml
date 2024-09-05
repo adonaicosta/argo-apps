@@ -25,7 +25,7 @@ spec:
           annotations: {}
           clientID: "34550581416"
           clientSecret: "GOCSPX"
-          cookieSecret: "cm9zY2E="
+          cookieSecret: "SQLoHEE8nHU7vkpf6DVuw1ZcM0U4m9ANUtnUqXp7tw4="
         configFile: |-
           email_domains = [ "arromaba.com" ]
           upstreams = [ "file:///dev/null" ]
