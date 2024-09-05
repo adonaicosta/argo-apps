@@ -17,7 +17,7 @@ spec:
   source:
     path: config/installation
     repoURL: https://github.com/rabbitmq/cluster-operator.git
-    targetRevision: v1.5.0
+    targetRevision: v2.5.0
   project: default
   syncPolicy:
     automated:
