@@ -645,7 +645,6 @@ spec:
                         name: community-plugins
             persistence:
               storage: 10Gi
-              storageClassName: premium-rwo
             rabbitmq:
               additionalConfig: |
                 cluster_partition_handling = ignore
@@ -679,7 +678,7 @@ spec:
               nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
             name: default-rabbitmq
           spec:
-            ingressClassName: nginx-external
+            ingressClassName: nginx
             rules:
             - host: rabbitmq.pombo.azul.meuovo
               http:
