@@ -25,6 +25,9 @@ spec:
       kind: HorizontalPodAutoscaler
       jsonPointers:
         - /spec/metrics
+    - kind: Secret
+      jsonPointers:
+        - /data
   source:
     path: ''
     repoURL: https://charts.getup.io/getupcloud
