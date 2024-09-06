@@ -1,0 +1,6 @@
+prometheus:
+  enable: true
+  prometheusSpec:
+    disableCompaction: true
+    externalLabels:
+      cluster: deve-teste-sobre-values
