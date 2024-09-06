@@ -15,16 +15,13 @@ spec:
     namespace: sre
     server: https://kubernetes.default.svc
   sources:
-    - repoURL: https://github.com/adonaicosta/argo-apps.git
-      targetRevision: HEAD
-      ref: values
     - repoURL: https://prometheus-community.github.io/helm-charts
       targetRevision: 58.2.2
       chart: kube-prometheus-stack
       helm:
-        fileParameters:
-        - name: grafana.adminPassword 
-          value: $values/values/values2/enviroment-vars
+        #fileParameters:
+        #- name: grafana.adminPassword 
+        #  value: $values/values/values2/enviroment-vars
         valueFiles:
         - $values/values/kubeprometheus-operator.yaml
         values: |-
@@ -83,6 +80,9 @@ spec:
               key: dedicated
               operator: Equal
               value: prometheus
+    - repoURL: https://github.com/adonaicosta/argo-apps.git
+      targetRevision: HEAD
+      ref: values
   project: default
   syncPolicy:
     automated:
@@ -91,9 +91,11 @@ spec:
     syncOptions:
       - ServerSideApply=true
       - Replace=true
-    retry:
-      limit: 2
-      backoff:
-        duration: 5s
-        maxDuration: 3m0s
-        factor: 2
+      - RespectIgnoreDifferences=true
+      - ApplyOutOfSyncOnly=true
+    #retry:
+    #  limit: 2
+    #  backoff:
+    #    duration: 5s
+    #    maxDuration: 3m0s
+    #    factor: 2
