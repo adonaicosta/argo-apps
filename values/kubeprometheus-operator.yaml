@@ -1,6 +1,7 @@
 prometheus.prometheusSpec.externalLabels.cluster: deve-teste-sobre-values
 prometheusOperator.admissionWebhooks.patch.annotations:
   argocd.argoproj.io/hook: PreSync
+  argocd.argoproj.io/hook-delete-policy: HookSucceeded
 grafana:
   ingress:
     enabled: true

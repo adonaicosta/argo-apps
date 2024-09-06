@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: sre
+resources:
+  #  - "github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.12.1"
+  - "github.com/rabbitmq/cluster-operator/config/installation?ref=v2.5.0"
+ 
