@@ -1,6 +1,10 @@
-prometheus:
-  enable: true
-  prometheusSpec:
-    disableCompaction: true
-    externalLabels:
-      cluster: deve-teste-sobre-values
+prometheus.prometheusSpec.externalLabels.cluster: deve-teste-sobre-values
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+    - grafana.pombo.meuovo
+  persistence:
+    enabled: true
+    size: 4Gi
+  adminPassword: pipoca
